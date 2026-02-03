@@ -11,6 +11,15 @@ app.get("/test", (req, res) => {
   res.send("Hello TechUp!");
 });
 
+app.get("/profiles", (req, res) => {
+    res.status(200).json({
+      data: {
+        name: "john",
+        age: 20
+      }
+    });
+  });
+
 app.listen(port, () => {
   console.log(`Server is running at ${port}`);
 });
