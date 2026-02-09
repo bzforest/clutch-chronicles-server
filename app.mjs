@@ -51,7 +51,7 @@ app.get("/health", (req, res) => {
   app.get("/test-data", async (req, res) => {
     try {
       // สั่งให้ Database ส่งข้อมูลทั้งหมดในตาราง testing_users มาให้หน่อย
-      const result = await pool.query("select * from testing_users");
+      const result = await pool.query("select * from posts");
   
       // ส่งผลลัพธ์กลับไปให้ดู
       res.json({
@@ -60,7 +60,7 @@ app.get("/health", (req, res) => {
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ message: "Database connection failed ❌" });
     }
   });
 
