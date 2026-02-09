@@ -50,8 +50,8 @@ app.get("/health", (req, res) => {
 
   app.get("/test-data", async (req, res) => {
     try {
-      // สั่งให้ Database ส่งข้อมูลทั้งหมดในตาราง testing_users มาให้หน่อย
-      const result = await pool.query("select * from posts");
+      // สั่งให้ Database ส่งข้อมูลทั้งหมดในตาราง posts มาให้หน่อย
+      const result = await connectionPool.query("select * from posts");
   
       // ส่งผลลัพธ์กลับไปให้ดู
       res.json({
