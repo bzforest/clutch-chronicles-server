@@ -6,29 +6,29 @@ const postRouter = Router();
 
 postRouter.post("/", [postValidation], async (req, res) => {
     const { title, image, category_id, description, content, status_id } = req.body;
-  
+
     try {
-      const query = `
+        const query = `
         INSERT INTO posts (title, image, category_id, description, content, status_id)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *
       `;
-      
-      const values = [title, image, category_id, description, content, status_id];
-      const result = await connectionPool.query(query, values);
-  
-      return res.status(201).json({
-        message: "Created post successfully",
-        data: result.rows[0]
-      });
-  
+
+        const values = [title, image, category_id, description, content, status_id];
+        const result = await connectionPool.query(query, values);
+
+        return res.status(201).json({
+            message: "Created post successfully",
+            data: result.rows[0]
+        });
+
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        message: "Server could not create post because database connection"
-      });
+        console.error(error);
+        return res.status(500).json({
+            message: "Server could not create post because database connection"
+        });
     }
-  });
+});
 
 postRouter.get("/", async (req, res) => {
     // 1. รับค่าจาก Query Params (กำหนดค่า Default ถ้าไม่ส่งมา)
@@ -119,7 +119,11 @@ postRouter.get("/:postId", async (req, res) => {
 
     const { postId } = req.params;
     try {
-        const result = await connectionPool.query(`SELECT * FROM posts WHERE id = $1`, [postId])
+        const result = await connectionPool.query(`
+            SELECT posts.*, categories.name AS category_name
+            FROM posts
+            INNER JOIN categories ON posts.category_id = categories.id
+            WHERE posts.id = $1`, [postId])
 
         if (!result.rows[0]) {
             return res.status(404).json({
