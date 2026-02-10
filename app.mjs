@@ -83,7 +83,11 @@ app.get("/posts", async (req, res) => {
                 INNER JOIN categories
                 ON posts.category_id = categories.id
                 `;
-    let countQuery = `SELECT COUNT(*) FROM posts`;
+    let countQuery = `
+                SELECT COUNT(*)
+                FROM posts
+                INNER JOIN categories ON posts.category_id = categories.id
+              `;
 
     let values = [];        // เก็บค่าที่จะยัดใส่ $1, $2
     let conditions = [];    // เก็บเงื่อนไข WHERE
