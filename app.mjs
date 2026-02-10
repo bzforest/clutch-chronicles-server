@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import { connectionPool } from "./utils/db.mjs";
-import postRouter from "./Routes/posts.mjs";
+import postRouter from "./routes/posts.mjs";
 
 const app = express();
 const port = process.env.PORT || 4000;
