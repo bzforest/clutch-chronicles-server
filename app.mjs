@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // Frontend local (Vite)
-      "http://localhost:3000", // Frontend local (React แบบอื่น)
+      "http://localhost:4000", // Frontend local (React แบบอื่น)
       "https://clutch-chronicles.vercel.app", // Frontend ที่ Deploy แล้ว
       // ✅ ให้เปลี่ยน https://your-frontend.vercel.app เป็น URL จริงของ Frontend ที่ deploy แล้ว
     ],
