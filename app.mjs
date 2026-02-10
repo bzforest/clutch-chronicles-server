@@ -91,7 +91,7 @@ app.get("/posts", async (req, res) => {
     // --- ตรวจสอบ Category ---
     if (category) {
       // สมมติว่ารับมาเป็น category_id (เพราะใน DB เก็บเป็น id)
-      conditions.push(`category_id = $${values.length + 1}`);
+      conditions.push(`categories.name ILIKE $${values.length + 1}`);
       values.push(category);
     }
 
