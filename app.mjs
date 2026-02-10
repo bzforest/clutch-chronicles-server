@@ -77,9 +77,14 @@ app.get("/posts", async (req, res) => {
   try {
     // 2. สร้าง SQL แบบ Dynamic (เริ่มจาก SELECT ปกติ)
     // เราต้องทำ 2 คำสั่ง: query สำหรับดึงข้อมูล และ countQuery สำหรับนับจำนวนทั้งหมด
-    let query = `SELECT * FROM posts`;
+    let query = `
+                SELECT posts.*, categories.name AS category_name
+                FROM posts
+                INNER JOIN categories
+                ON posts.category_id = categories.id
+                `;
     let countQuery = `SELECT COUNT(*) FROM posts`;
-    
+
     let values = [];        // เก็บค่าที่จะยัดใส่ $1, $2
     let conditions = [];    // เก็บเงื่อนไข WHERE
 
@@ -111,7 +116,7 @@ app.get("/posts", async (req, res) => {
 
     // 4. เติม Order, Limit, Offset ให้ query หลัก
     query += ` ORDER BY date DESC LIMIT $${values.length + 1} OFFSET $${values.length + 2}`;
-    
+
     // ใส่ค่า limit และ offset ลงไปใน values ต่อท้าย
     const queryValues = [...values, limit, offset];
 
