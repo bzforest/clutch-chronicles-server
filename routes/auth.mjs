@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { createClient } from "@supabase/supabase-js";
-import connectionPool from "../utils/db.mjs";
-import protectUser from "./middlewares/protectUser.mjs";
-import protectAdmin from "./middlewares/protectAdmin.mjs";
+import { connectionPool } from "../utils/db.mjs";
+import protectUser from "../middlewares/protectUser.mjs";
+import protectAdmin from "../middlewares/protectAdmin.mjs";
 
 // สร้างตัวแทน (Client) สำหรับคุยกับระบบ Auth ของ Supabase
 const supabase = createClient(
@@ -13,12 +13,12 @@ const supabase = createClient(
 const authRouter = Router();
 
 // 🛡️ เทส 1: ต้องล็อกอินถึงจะเห็นข้อความนี้
-app.get("/protected-route", protectUser, (req, res) => {
+authRouter.get("/protected-route", protectUser, (req, res) => {
   res.json({ message: "This is protected content", user: req.user });
 });
 
 // 👑 เทส 2: ต้องเป็น admin เท่านั้นถึงจะเห็นข้อความนี้
-app.get("/admin-only", protectAdmin, (req, res) => {
+authRouter.get("/admin-only", protectAdmin, (req, res) => {
   res.json({ message: "This is admin-only content", admin: req.user });
 });
 
