@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import { connectionPool } from "./utils/db.mjs";
 import postRouter from "./routes/posts.mjs";
+import authRouter from "./routes/auth.mjs";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -22,6 +23,7 @@ app.use(
 );
 
 app.use("/posts" , postRouter);
+app.use("/auth", authRouter);
 
 app.get("/test", (req, res) => {
   res.send("Hello TechUp!");
