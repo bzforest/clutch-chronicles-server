@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import connectionPool from "../utils/db.mjs";
+import { connectionPool } from "../utils/db.mjs";
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
